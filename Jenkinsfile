@@ -1,18 +1,18 @@
 pipeline {
     agent any 
     environment {
-    DOCKERHUB_CREDENTIALS = credentials('saikumar313')
+    DOCKERHUB_CREDENTIALS = credentials('docker-hub-hareeshpdocker')
     }
     stages { 
         stage('SCM Checkout') {
             steps{
-            git 'https://github.com/ravdy/nodejs-demo.git'
+            git 'https://github.com/hareeshpgit/nodejs-demo.git'
             }
         }
 
         stage('Build docker image') {
             steps {  
-                sh 'docker build -t saikumar313/nodeapp:$BUILD_NUMBER .'
+                sh 'docker build -t hareeshpdocker/nginx-docker-image:$BUILD_NUMBER .'
             }
         }
         stage('login to dockerhub') {
@@ -22,9 +22,19 @@ pipeline {
         }
         stage('push image') {
             steps{
-                sh 'docker push saikumar313/nodeapp:$BUILD_NUMBER'
+                sh 'docker push hareeshpdocker/nginx-docker-image:$BUILD_NUMBER'
             }
         }
+        stage('pull image') {
+            steps{
+                sh 'docker pull hareeshpdocker/nginx-docker-image:$BUILD_NUMBER'
+            }
+        }
+        stage('run image') {
+            steps{
+                sh 'docker run -d -p 80:80 hareeshpdocker/nginx-docker-image:$BUILD_NUMBER'
+            }
+        }   
 }
 post {
         always {
