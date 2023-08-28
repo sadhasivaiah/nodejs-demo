@@ -12,7 +12,7 @@ pipeline {
 
         stage('Build docker image') {
             steps {  
-                sh 'docker build -t hareeshpdocker/nginx-docker-image:$BUILD_NUMBER .'
+                sh 'docker build -t sadasivaiah01/nginx-docker-image:$BUILD_NUMBER .'
             }
         }
         stage('login to dockerhub') {
@@ -22,17 +22,17 @@ pipeline {
         }
         stage('push image') {
             steps{
-                sh 'docker push hareeshpdocker/nginx-docker-image:$BUILD_NUMBER'
+                sh 'docker push sadasivaiah01/nginx-docker-image:$BUILD_NUMBER'
             }
         }
         stage('pull image') {
             steps{
-                sh 'docker pull hareeshpdocker/nginx-docker-image:$BUILD_NUMBER'
+                sh 'docker pull sadasivaiah01/nginx-docker-image:$BUILD_NUMBER'
             }
         }
         stage('run image') {
             steps{
-                sh 'docker run -d -p 80:80 hareeshpdocker/nginx-docker-image:$BUILD_NUMBER'
+                sh 'docker run -d -p 80:80 sadasivaiah01/nginx-docker-image:$BUILD_NUMBER'
             }
         }   
 }
